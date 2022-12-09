@@ -1,2 +1,2 @@
-# HolyWar
+# Holy War
 QR multiplayer game
