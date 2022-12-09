@@ -1,6 +1,14 @@
+const DESC_PROMPT = `Write an interesting name for a location that would exist at some point in the history of real world Earth, that ties together the spirit and meaning of the following phrases which are separated by newlines. Print the title by itself in a new line, using capitalized words. Then write a 2-sentence description of maximum 700 characters of the above location using flowery prose, which incorporates the key nouns in the phrases repeatedly and with great detail. Print the description by itself after another new line.\n\n`;
+const IMAGE_PROMPT = `An impressive award-winning landscape that matches the following description, high definition with lots of lines and bold colors, in the style of famous illustrators, trending on art station: `;
+
 void init();
 
 async function init() {
+    const auth = await authUser();
+    if (!auth) {
+        return;
+    }
+
     const id = localStorage.getItem('id');
     if (!id) {
         location.pathname = '/init.html';
@@ -14,36 +22,47 @@ async function init() {
     const loc = url.searchParams.get('loc');
     console.log('loc', loc);
 
-    const location = (await db.collection('locations').doc(id).get()).data();
-    if (!location) {
+    if (!loc) {
+        return;
+    }
+
+    const place = (await db.collection('places').doc(loc).get()).data();
+    if (!place) {
         // get thematic phrases
         const p1 = prompt('Phrase 1');
         const p2 = prompt('Phrase 2');
         const p3 = prompt('Phrase 3');
+        const p = `${p1}. \n${p2}. \n${p3}. `;
+
+        //  generate title, description
         const openaiKey = (
             await db.collection('config').doc('openai_key').get()
         ).data().value;
-
-        //  generate title, description
         const completion = await getCompletion(
             openaiKey,
-            `Write an impressive and interesting name for a location that would exist in the real world, that exemplifies the following phrases which are separate by newlines. Print the title by itself in a new line, using capitalized words. Then write a detailed 3-sentence description of the above location using flowery prose. Print the description by itself after another new line.\n\n${p1} ${p2} ${p3}`
+            `${DESC_PROMPT} ${p}`
         );
         const [title, desc] = completion.split('\n\n');
-        document.write(`<h1>${title}</h1>`);
-        document.write(`<p>${desc}</p>`);
 
         //  generate image
-        const image = await getImage(
-            openaiKey,
-            `An impressive landscape that matches the following description, paying attention to the nouns, highly detailed with little noise, bold colors, trending on art station: ${p1} ${p2} ${p3}`
-        );
-        document.write(`<img src="${image}" />`);
+        const imageUrl = await getImage(openaiKey, `${IMAGE_PROMPT} ${p}`);
 
         //  save to firebase with location key
+        await db.collection('places').doc(loc).set({
+            title,
+            desc,
+            imageUrl,
+            prompt: p,
+        });
+
+        // reload to rescan with the new location
+        location.reload();
     }
 
     //  "you found: Location X"
+    document.write(`<h1>${place.title}</h1>`);
+    document.write(`<p>${place.desc}</p>`);
+    document.write(`<img src="${place.imageUrl}" />`);
     //  influence sect
     //      increment points for all users in sect
     //  sect X is winning, do you want to convert?
@@ -75,7 +94,7 @@ async function getImage(key, prompt) {
         },
         body: JSON.stringify({
             prompt,
-            size: '1024x1024',
+            size: '512x512',
             n: 1,
         }),
     }).then((res) => res.json());

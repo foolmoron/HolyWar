@@ -1,6 +1,11 @@
 void init();
 
 async function init() {
+    const auth = await authUser();
+    if (!auth) {
+        return;
+    }
+
     const id = localStorage.getItem('id');
     if (!id) {
         const name = prompt('Name');
@@ -11,5 +16,5 @@ async function init() {
         });
         localStorage.setItem('id', doc.id);
     }
-    location.pathname = '/';
+    location.pathname = '/scan.html';
 }
