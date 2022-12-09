@@ -6,13 +6,11 @@ async function init() {
         return;
     }
 
-    const id = localStorage.getItem('id');
-    if (!id) {
+    const user = (await db.collection('users').doc(auth.email).get())?.data();
+    if (!user) {
         location.pathname = '/init.html';
         return;
     }
-
-    const user = (await db.collection('users').doc(id).get()).data();
     console.log('user', user);
 
     const url = new URL(window.location.href);

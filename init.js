@@ -6,15 +6,14 @@ async function init() {
         return;
     }
 
-    const id = localStorage.getItem('id');
-    if (!id) {
+    const user = (await db.collection('users').doc(auth.email).get())?.data();
+    if (!user) {
         const name = prompt('Name');
         const sect = prompt('Sect');
-        const doc = await db.collection('users').add({
+        const doc = await db.collection('users').doc(auth.email).set({
             name,
             sect,
         });
-        localStorage.setItem('id', doc.id);
     }
     location.pathname = '/scan.html';
 }
