@@ -53,7 +53,7 @@ export const onInfluence = firestore
         if (influenceWithinLimit.size > 0) {
             logger.log(
                 'Found influence within time limit, rejecting this new influence',
-                { prevInfluence: influenceWithinLimit.docs[0] }
+                { prevInfluence: influenceWithinLimit.docs[0].id }
             );
             await change.ref.delete();
             return;
