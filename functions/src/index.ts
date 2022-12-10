@@ -1,6 +1,9 @@
 import { firestore, logger } from 'firebase-functions';
 import admin from 'firebase-admin';
 import { FieldValue } from '@google-cloud/firestore';
+import fetch from 'node-fetch';
+
+const IMAGE_BUCKET = 'holy-war-d3052_images';
 
 function assert(value: unknown, message: string): asserts value {
     if (!value) throw new Error(`Assertion failed: ${message}`);
@@ -21,14 +24,14 @@ export const onInfluence = firestore
         const loc = change.data()?.loc as string;
         assert(loc, 'loc is undefined');
 
-        const sect = await(
+        const sect = (await (
             await db.doc(`users/${context.params.userId}`).get()
-        ).data()?.sect as string;
+        ).data()?.sect) as string;
         assert(sect, 'sect is undefined');
 
-        const limitHours = await(
+        const limitHours = (await (
             await db.doc('config/influence_limit_hours').get()
-        ).data()?.value as number;
+        ).data()?.value) as number;
         assert(limitHours, 'limitHours is undefined');
 
         logger.log('Influencing!', {
@@ -76,4 +79,40 @@ export const onInfluence = firestore
                 });
             })
         );
+    });
+
+export const copyImage = firestore
+    .document('places/{userId}')
+    .onWrite(async (change, _context) => {
+        if (!change.after.exists) {
+            return;
+        }
+
+        const imageUrl = change.after.data()?.imageUrl as string;
+        if (imageUrl.startsWith('https://storage.googleapis.com')) {
+            logger.log('Image already cached to google storage, aborting', {
+                imageUrl,
+            });
+            return;
+        }
+
+        logger.log('Downloading image to cache', {
+            imageUrl,
+        });
+        const imageBuffer = await fetch(imageUrl).then((res) =>
+            res.arrayBuffer()
+        );
+        const file = admin
+            .storage()
+            .bucket(IMAGE_BUCKET)
+            .file(`${change.after.id}.png`);
+        await file.save(Buffer.from(imageBuffer));
+
+        const newUrl = file.publicUrl();
+        await change.after.ref.update({
+            imageUrl: newUrl,
+        });
+        logger.log('Successfully cached image', {
+            newUrl,
+        });
     });
