@@ -36,12 +36,20 @@ export const onInfluence = firestore
             sect,
         });
 
-        // Check for limit
+        // Check for prev within limit
         const influenceWithinLimit = await db
             .collection(`users/${context.params.userId}/influences`)
+            .where('loc', '==', loc)
             .where('time', '>=', time - limitHours * 60 * 60 * 1000)
             .limit(1)
             .get();
+
+        // Set timestamp after so it's not counted in above query
+        await change.ref.update({
+            time,
+        });
+
+        // Reject if within limit
         if (influenceWithinLimit.size > 0) {
             logger.log(
                 'Found influence within time limit, rejecting this new influence',
