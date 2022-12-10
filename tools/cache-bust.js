@@ -25,6 +25,7 @@ async function main() {
                 /("\.\/.*)(\.js|\.css)(")/g,
                 `$1$2?v=${version}$3`
             );
+            console.log(`Cache-busted ${filePath}...`);
             await fs.writeFile(filePath, newContents, 'utf8');
         })
     );
