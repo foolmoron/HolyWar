@@ -1,4 +1,4 @@
-const DESC_PROMPT = `Write an interesting name for a location that would exist at some point in the history of real world Earth, that ties together the spirit and meaning of the following phrases which are separated by newlines. Print the title by itself in a new line, using capitalized words. Then write a 2-sentence description of maximum 700 characters of the above location using flowery prose, which incorporates the key nouns in the phrases repeatedly and with great detail. Print the description by itself after another new line.\n\n`;
+const DESC_PROMPT = `Write an interesting name for a location that would exist at some point in the history of real world Earth, that ties together the spirit and meaning of the following phrases which are separated by newlines. Print the title by itself in a new line, using capitalized words. Then write a 2-sentence present tense description between 400 and 700 characters of the above location using a solemn, religious, historical style of prose. The description must incorporate the key nouns in the phrases in a meaningful way. Print the description by itself after another new line.\n\n`;
 const IMAGE_PROMPT = `An impressive award-winning landscape that matches the following description, high definition with lots of lines and bold colors, in the style of famous illustrators, trending on art station: `;
 
 void init();
@@ -28,6 +28,9 @@ async function init() {
     const p1 = prompt('Phrase 1');
     const p2 = prompt('Phrase 2');
     const p3 = prompt('Phrase 3');
+    if (!p1 || !p2 || !p3) {
+        return;
+    }
     const p = `${p1}. \n${p2}. \n${p3}. `;
 
     //  generate title, description
