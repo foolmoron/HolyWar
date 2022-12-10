@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "influences",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "loc",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "time",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
