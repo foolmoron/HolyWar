@@ -22,7 +22,7 @@ service cloud.firestore {
           request.auth.token.email == 'veronica.huynh@gmail.com'
         );
     }
-    match /users/{userId} {
+    match /users/{userId}/{document=**} {
       allow create, update: if request.auth != null && request.auth.token.email == userId
     }
   }
