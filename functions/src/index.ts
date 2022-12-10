@@ -11,6 +11,8 @@ const db = admin.firestore();
 
 const increment = FieldValue.increment(1);
 
+console.warn('hi');
+
 export const onInfluence = functions.firestore
     .document('users/{userId}/influences/{influenceId}')
     .onWrite(async (change, context) => {
