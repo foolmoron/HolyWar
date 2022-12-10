@@ -31,7 +31,11 @@ async function init() {
     document.write(`<h1>${place.title}</h1>`);
     document.write(`<p>${place.desc}</p>`);
     document.write(`<img src="${place.imageUrl}" />`);
+
     //  influence sect
-    //      increment points for all users in sect
+    await db.collection(`users/${user.id}/influences`).add({
+        loc,
+    });
+
     //  sect X is winning, do you want to convert?
 }
