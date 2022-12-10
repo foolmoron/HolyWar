@@ -9,12 +9,6 @@ async function init() {
         return;
     }
 
-    const id = localStorage.getItem('id');
-    if (!id) {
-        location.pathname = '/init.html';
-        return;
-    }
-
     const url = new URL(window.location.href);
     const loc = url.searchParams.get('loc');
     console.log('loc', loc);
@@ -51,7 +45,7 @@ async function init() {
         desc,
         imageUrl,
         prompt: p,
-        owner: id,
+        owner: auth.email,
     });
 
     // back to scan with the new location
