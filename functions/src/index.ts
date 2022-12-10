@@ -12,7 +12,15 @@ function assert(value: unknown, message: string): asserts value {
 admin.initializeApp();
 const db = admin.firestore();
 
-const increment = FieldValue.increment(1);
+const increment1 = FieldValue.increment(1);
+
+export const onCreateUser = firestore
+    .document('users/{userId}')
+    .onCreate(async (change, context) => {
+        change.ref.update({
+            score: FieldValue.increment(0), // safe way to init
+        });
+    });
 
 export const onInfluence = firestore
     .document('users/{userId}/influences/{influenceId}')
@@ -75,7 +83,7 @@ export const onInfluence = firestore
         await Promise.all(
             usersToAddScore.docs.map(async (user) => {
                 await db.doc(`users/${user.id}`).update({
-                    score: increment,
+                    score: increment1,
                 });
             })
         );
