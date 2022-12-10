@@ -19,7 +19,11 @@ async function init() {
     }
 
     const place = (await db.collection('places').doc(loc).get()).data();
-    if (place) {
+    if (!place) {
+        location.pathname = '/index.html';
+        return;
+    }
+    if (place.owner) {
         location.pathname = '/scan.html';
         return;
     }

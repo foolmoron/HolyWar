@@ -97,6 +97,10 @@ export const copyImage = firestore
         }
 
         const imageUrl = change.after.data()?.imageUrl as string;
+        if (!imageUrl) {
+            logger.log('Missing image url, aborting');
+            return;
+        }
         if (imageUrl.startsWith('https://storage.googleapis.com')) {
             logger.log('Image already cached to google storage, aborting', {
                 imageUrl,

@@ -23,7 +23,7 @@ async function init() {
     }
 
     const place = (await db.collection('places').doc(loc).get()).data();
-    if (!place) {
+    if (!place.owner) {
         location.pathname = '/discover.html';
         return;
     }
