@@ -3,6 +3,7 @@
 <head>
     <title>Holy War | Init</title>
     <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" href="./init.css" />
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -11,7 +12,17 @@
     <script defer src="./init.js"></script>
 </head>
 <body>
-    <h1>Init</h1>
-    <p>stuff</p>
+    <h1>Welcome, <span class="name"></span>!</h1>
+    <form>
+        <h3>Join a Sect to fight in the great AI Holy War:</h3>
+        <input type="radio" name="sect" required id="sinatrans" value="The Sinatrans" data-color="#ffb326">
+        <label for="sinatrans">The Sinatrans</label>
+        <input type="radio" name="sect" required id="backprop" value="The Backpropagandists" data-color="#00e384">
+        <label for="backprop">The Backpropagandists</label>
+        <input type="radio" name="sect" required id="unstable" value="The Unstable Diffusers" data-color="#cc02bb">
+        <label for="unstable">The Unstable Diffusers</label>
+        <p class="desc"></p>
+        <input type="submit" class="submit-button" value="Join..?" disabled />
+    </form>
 </body>
 </html>

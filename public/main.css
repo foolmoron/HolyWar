@@ -4,22 +4,24 @@ body {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: black;
-    color: white;
-    font-family: sans-serif;
-    display: flex;
-    flex-direction: column;
 }
 
 html {
     font-size: xx-large;
 }
 body {
+    background-color: black;
+    color: white;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
     padding: 0.9rem 1.7rem;
+    box-sizing: border-box;
+    transition: background-color 0.8s;
 }
 
 body::after {
-    content: " ";
+    content: ' ';
     background-color: black;
     display: block;
     position: absolute;
@@ -39,7 +41,8 @@ body.loaded::after {
 .title {
     margin: 0;
     font-size: 9vw;
-    text-shadow: 0.08em 0.08em 0px black, -0.04em -0.04em 0px black, 0.04em -0.04em 0px black, -0.04em 0.04em 0px black;
+    text-shadow: 0.08em 0.08em 0px black, -0.04em -0.04em 0px black,
+        0.04em -0.04em 0px black, -0.04em 0.04em 0px black;
     text-align: center;
 }
 
