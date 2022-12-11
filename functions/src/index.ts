@@ -92,11 +92,12 @@ export const onInfluence = firestore
 export const copyImage = firestore
     .document('places/{userId}')
     .onWrite(async (change, _context) => {
-        if (!change.after.exists) {
+        const place = change.after.data();
+        if (!place) {
             return;
         }
 
-        const imageUrl = change.after.data()?.imageUrl as string;
+        const imageUrl = place.imageUrl as string;
         if (!imageUrl) {
             logger.log('Missing image url, aborting');
             return;
@@ -108,6 +109,13 @@ export const copyImage = firestore
             return;
         }
 
+        // Append to history
+        const history = await db
+            .collection(`${change.after.ref.path}/history`)
+            .add({
+                time: FieldValue.serverTimestamp(),
+            });
+
         logger.log('Downloading image to cache', {
             imageUrl,
         });
@@ -117,13 +125,22 @@ export const copyImage = firestore
         const file = admin
             .storage()
             .bucket(IMAGE_BUCKET)
-            .file(`${change.after.id}.png`);
+            .file(`${change.after.id}_${history.id}.png`);
         await file.save(Buffer.from(imageBuffer));
 
         const newUrl = file.publicUrl();
         await change.after.ref.update({
             imageUrl: newUrl,
         });
+
+        history.update({
+            ...place,
+        });
+        logger.log('Appended place history', {
+            placeId: change.after.id,
+            historyId: history.id,
+        });
+
         logger.log('Successfully cached image', {
             newUrl,
         });
@@ -143,16 +160,4 @@ export const appendPlaceHistory = firestore
 
         const place = change.after.data();
         assert(place, 'place is undefined');
-
-        const doc = await db
-            .collection(`${change.after.ref.path}/history`)
-            .add({
-                time: FieldValue.serverTimestamp(),
-                ...place,
-            });
-
-        logger.log('Appended place history', {
-            placeId: change.after.id,
-            historyId: doc.id,
-        });
     });
