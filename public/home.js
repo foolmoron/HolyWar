@@ -14,6 +14,8 @@ async function run() {
     }
     console.log('user', user);
 
+    document.body.classList.add('loaded');
+
     const ownedLocations = (
         await db.collection('places').where('owner', '==', userId).get()
     )?.docs;

@@ -9,6 +9,9 @@ async function run() {
     const name = auth.displayName;
 
     const user = (await db.collection('users').doc(userId).get())?.data();
+
+    document.body.classList.add('loaded');
+
     if (!user) {
         const sect = prompt('Sect');
         const doc = await db.collection('users').doc(userId).set({

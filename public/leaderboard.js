@@ -10,12 +10,29 @@ async function run() {
     const users = (await db.collection('users').orderBy('score', 'desc').get())
         ?.docs;
 
+    const sectLeaders = {};
+    for (const user of users) {
+        const data = user.data();
+        if (data.sect && !sectLeaders[data.sect]) {
+            sectLeaders[data.sect] = user.id;
+        }
+    }
+
     document.body.insertAdjacentHTML('beforeend', `<h1>Leaderboard</h1>`);
     for (const user of users) {
         const data = user.data();
-        document.body.insertAdjacentHTML(
-            'beforeend',
-            `<h3>${user.id}: ${data.score ?? 0}</h2>`
-        );
+        let line = '';
+        if (user.id === userId) {
+            line += `<h3><b>${user.id}: ${data.score ?? 0}</b>`;
+        } else {
+            line += `<h3>${user.id}: ${data.score ?? 0}`;
+        }
+        if (user.id === sectLeaders[data.sect]) {
+            line += ` (Leader of ${data.sect})`;
+        }
+        line += '</h3>';
+        document.body.insertAdjacentHTML('beforeend', line);
     }
+
+    document.body.classList.add('loaded');
 }

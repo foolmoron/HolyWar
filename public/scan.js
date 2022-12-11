@@ -77,5 +77,9 @@ async function run() {
             });
         });
 
+    setTimeout(() => {
+        document.body.classList.add('loaded');
+    }, 400); // wait a bit for image to load
+
     //  sect X is winning, do you want to convert?
 }

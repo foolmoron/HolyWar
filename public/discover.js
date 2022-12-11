@@ -28,6 +28,8 @@ async function run() {
         return;
     }
 
+    document.body.classList.add('loaded');
+
     let submitted = false;
     document.querySelector('form').addEventListener('submit', async (e) => {
         if (submitted) {
