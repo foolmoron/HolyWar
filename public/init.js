@@ -1,6 +1,6 @@
-void init();
+void run();
 
-async function init() {
+async function run() {
     const auth = await authUser();
     if (!auth) {
         return;

@@ -1,6 +1,6 @@
-void init();
+void run();
 
-async function init() {
+async function run() {
     const auth = await authUser();
     if (!auth) {
         return;
@@ -18,14 +18,21 @@ async function init() {
         await db.collection('places').where('owner', '==', userId).get()
     )?.docs;
 
-    document.write(`<h1>${user.name}</h1>`);
-    document.write(`<h3>Score: ${user.score ?? 0}</h3>`);
-    document.write(`<h3>Sect: ${user.sect}</h3>`);
+    document.body.insertAdjacentHTML('beforeend', `<h1>${user.name}</h1>`);
+    document.body.insertAdjacentHTML(
+        'beforeend',
+        `<h3>Score: ${user.score ?? 0}</h3>`
+    );
+    document.body.insertAdjacentHTML(
+        'beforeend',
+        `<h3>Sect: ${user.sect}</h3>`
+    );
 
-    document.write(`<h2>Owned Locations</h2>`);
+    document.body.insertAdjacentHTML('beforeend', `<h2>Owned Locations</h2>`);
     for (const loc of ownedLocations) {
         const data = loc.data();
-        document.write(
+        document.body.insertAdjacentHTML(
+            'beforeend',
             `<h3><a href="./scan?loc=${loc.id}">${loc.data().title}</a></h3>`
         );
     }

@@ -1,6 +1,6 @@
-void init();
+void run();
 
-async function init() {
+async function run() {
     const auth = await authUser();
     if (!auth) {
         return;
@@ -33,14 +33,50 @@ async function init() {
     }
 
     //  "you found: Location X"
-    document.write(`<h1>${place.title}</h1>`);
-    document.write(`<p>${place.desc}</p>`);
-    document.write(`<img src="${place.imageUrl}" />`);
+    document.querySelector('.title').innerHTML = place.title;
+    document.querySelector('.desc').innerHTML = place.desc;
+    document.documentElement.style.setProperty(
+        '--bg-img',
+        `url(${place.imageUrl})`
+    );
 
-    //  influence sect
-    await db.collection(`users/${userId}/influences`).add({
-        loc,
+    // Orientation affects background
+    let betaOrig = null;
+    let gammaOrig = null;
+    window.addEventListener(
+        'deviceorientation',
+        ({ alpha, beta, gamma }) => {
+            console.log(`orientation`, alpha, beta, gamma);
+            if (betaOrig === null) {
+                betaOrig = beta;
+            }
+            if (gammaOrig === null) {
+                gammaOrig = gamma;
+            }
+
+            const x = Math.max(-18, Math.min(18, gamma - gammaOrig)) / 36 + 0.5;
+            document.documentElement.style.setProperty('--bg-x', `${x * 100}%`);
+
+            const y = Math.max(-18, Math.min(18, beta - betaOrig)) / 36 + 0.5;
+            document.documentElement.style.setProperty('--bg-y', `${y * 100}%`);
+        },
+        true
+    );
+
+    // Tap body to hide ui
+    document.body.addEventListener('click', (e) => {
+        document.body.classList.toggle('hide-ui');
     });
+
+    // Press button to influence
+    document
+        .querySelector('.influence')
+        .addEventListener('click', async (e) => {
+            e.stopPropagation();
+            await db.collection(`users/${userId}/influences`).add({
+                loc,
+            });
+        });
 
     //  sect X is winning, do you want to convert?
 }
