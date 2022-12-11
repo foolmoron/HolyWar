@@ -48,7 +48,7 @@ async function init() {
     const imageUrl = await getImage(openaiKey, `${IMAGE_PROMPT} ${p}`);
 
     //  save to firebase with location key
-    await db.collection('places').doc(loc).set({
+    await db.collection('places').doc(loc).update({
         title,
         desc,
         imageUrl,

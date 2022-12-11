@@ -128,3 +128,31 @@ export const copyImage = firestore
             newUrl,
         });
     });
+
+export const appendPlaceHistory = firestore
+    .document('places/{placeId}')
+    .onWrite(async (change, _context) => {
+        if (!change.after.exists) {
+            return;
+        }
+
+        // Only append history if title changed
+        if (change.before.data()?.title === change.after.data()?.title) {
+            return;
+        }
+
+        const place = change.after.data();
+        assert(place, 'place is undefined');
+
+        const doc = await db
+            .collection(`${change.after.ref.path}/history`)
+            .add({
+                time: FieldValue.serverTimestamp(),
+                ...place,
+            });
+
+        logger.log('Appended place history', {
+            placeId: change.after.id,
+            historyId: doc.id,
+        });
+    });

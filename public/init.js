@@ -6,10 +6,10 @@ async function init() {
         return;
     }
     const userId = auth.email;
+    const name = auth.displayName;
 
     const user = (await db.collection('users').doc(userId).get())?.data();
     if (!user) {
-        const name = prompt('Name');
         const sect = prompt('Sect');
         const doc = await db.collection('users').doc(userId).set({
             name,
