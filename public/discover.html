@@ -4,6 +4,7 @@
 <head>
     <title>Holy War | Discover</title>
     <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" href="./discover.css" />
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -13,6 +14,23 @@
 </head>
 
 <body>
+    <h1 class="title">You discovered an abandoned location!</h1>
+    <p>
+        To build this location in your vision and claim it as your own, enter 3 tenets.
+        <br><br>
+        TIP: Use short phrases, ideas, or nouns that will produce fun results from the AI!
+        <br><br>
+    </p>
+    <form>
+        <label for="tenet1">Tenet 1:</label>
+        <textarea id="tenet1" name="tenet1" required minlength="3" maxlength="100"></textarea>
+        <label for="tenet2">Tenet 2:</label>
+        <textarea id="tenet2" name="tenet2" required minlength="3" maxlength="100"></textarea>
+        <label for="tenet3">Tenet 3:</label>
+        <textarea id="tenet3" name="tenet3" required minlength="3" maxlength="100"></textarea>
+        <input type="submit" class="submit-button" value="Claim" />
+    </form>
+    <h1 class="title generating-msg">Generating... wait a few secs!</h1>
 </body>
 
 </html>

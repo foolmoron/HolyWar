@@ -28,36 +28,46 @@ async function run() {
         return;
     }
 
-    // get thematic phrases
-    const p1 = prompt('Phrase 1');
-    const p2 = prompt('Phrase 2');
-    const p3 = prompt('Phrase 3');
-    if (!p1 || !p2 || !p3) {
-        return;
-    }
-    const p = `${p1}. \n${p2}. \n${p3}. `;
+    let submitted = false;
+    document.querySelector('form').addEventListener('submit', async (e) => {
+        if (submitted) {
+            return;
+        }
+        submitted = true;
+        e.preventDefault();
+        document.body.classList.add('generating');
 
-    //  generate title, description
-    const openaiKey = (
-        await db.collection('config').doc('openai_key').get()
-    ).data().value;
-    const completion = await getCompletion(openaiKey, `${DESC_PROMPT} ${p}`);
-    const [title, desc] = completion.split('\n\n');
+        const data = new FormData(e.target);
+        const p = `${data.get('tenet1')}. \n${data.get('tenet2')}. \n${data.get(
+            'tenet3'
+        )}.`;
 
-    //  generate image
-    const imageUrl = await getImage(openaiKey, `${IMAGE_PROMPT} ${p}`);
+        //  generate title, description
+        const openaiKey = (
+            await db.collection('config').doc('openai_key').get()
+        ).data().value;
+        const completion = await getCompletion(
+            openaiKey,
+            `${DESC_PROMPT} ${p}`
+        );
+        const [title, desc] = completion.split('\n\n');
 
-    //  save to firebase with location key
-    await db.collection('places').doc(loc).update({
-        title,
-        desc,
-        imageUrl,
-        prompt: p,
-        owner: userId,
+        //  generate image
+        const imageUrl = await getImage(openaiKey, `${IMAGE_PROMPT} ${p}`);
+
+        //  save to firebase with location key
+        await db.collection('places').doc(loc).update({
+            title,
+            desc,
+            imageUrl,
+            prompt: p,
+            owner: userId,
+        });
+
+        // back to scan with the new location
+        location.pathname = '/scan.html';
     });
 
-    // back to scan with the new location
-    location.pathname = '/scan.html';
 }
 
 async function getCompletion(key, prompt) {

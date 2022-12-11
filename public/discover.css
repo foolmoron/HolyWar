@@ -1,0 +1,48 @@
+p {
+    font-size: medium;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    height: -webkit-fill-available;
+    font-size: larger;
+}
+
+label {
+    font-weight: bold;
+}
+
+textarea {
+    height: 7rem;
+    max-height: 7rem;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.generating-msg {
+    display: none;
+    margin: auto;
+    animation: grow-and-shrink 1.2s infinite ease-in-out;
+}
+
+@keyframes grow-and-shrink {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.14);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+body.generating *:not(.generating-msg) {
+    display: none;
+}
+
+body.generating .generating-msg {
+    display: unset;
+}

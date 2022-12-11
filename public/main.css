@@ -6,10 +6,29 @@ body {
     overflow: hidden;
     background-color: black;
     color: white;
+    font-family: sans-serif;
     display: flex;
     flex-direction: column;
 }
 
 html {
     font-size: xx-large;
+}
+body {
+    padding: 0.9rem 1.7rem;
+}
+
+.title {
+    margin: 0;
+    font-size: 9vw;
+    text-shadow: 0.08em 0.08em 0px black, -0.04em -0.04em 0px black, 0.04em -0.04em 0px black, -0.04em 0.04em 0px black;
+    text-align: center;
+}
+
+.submit-button {
+    align-self: center;
+    font-size: 2.8rem;
+    border-radius: 0.6rem;
+    padding: 0.6rem 1.2rem;
+    margin-top: auto;
 }

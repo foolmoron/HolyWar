@@ -45,8 +45,7 @@ async function run() {
     let gammaOrig = null;
     window.addEventListener(
         'deviceorientation',
-        ({ alpha, beta, gamma }) => {
-            console.log(`orientation`, alpha, beta, gamma);
+        ({ beta, gamma }) => {
             if (betaOrig === null) {
                 betaOrig = beta;
             }
