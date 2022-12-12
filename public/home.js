@@ -14,8 +14,6 @@ async function run() {
     }
     console.log('user', user);
 
-    document.body.classList.add('loaded');
-
     const ownedLocations = (
         await db.collection('places').where('owner', '==', userId).get()
     )?.docs;
@@ -23,11 +21,7 @@ async function run() {
     document.body.insertAdjacentHTML('beforeend', `<h1>${user.name}</h1>`);
     document.body.insertAdjacentHTML(
         'beforeend',
-        `<h3>Score: ${user.score ?? 0}</h3>`
-    );
-    document.body.insertAdjacentHTML(
-        'beforeend',
-        `<h3>Sect: ${user.sect}</h3>`
+        `<h4>Score: ${user.score ?? 0}</h4>`
     );
 
     document.body.insertAdjacentHTML('beforeend', `<h2>Owned Locations</h2>`);
@@ -35,7 +29,28 @@ async function run() {
         const data = loc.data();
         document.body.insertAdjacentHTML(
             'beforeend',
-            `<h3><a href="./scan?loc=${loc.id}">${loc.data().title}</a></h3>`
+            `<h4><a href="./scan?loc=${loc.id}">${loc.data().title}</a></h4>`
         );
     }
+
+    document.body.insertAdjacentHTML('beforeend', `<h2>Recent Influences</h2>`);
+    const recentInfluences = (
+        await db
+            .collection(`users/${userId}/influences`)
+            .orderBy('time', 'desc')
+            .get()
+    )?.docs;
+    for (const influence of recentInfluences) {
+        const data = influence.data();
+        document.body.insertAdjacentHTML(
+            'beforeend',
+            `<h4>${new Date(
+                data.time
+            ).toLocaleString()}:<br><a href="./scan?loc=${data.loc}">${
+                data.title
+            }</a></h4>`
+        );
+    }
+
+    document.body.classList.add('loaded');
 }

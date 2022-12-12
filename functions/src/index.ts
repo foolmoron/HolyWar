@@ -12,13 +12,15 @@ function assert(value: unknown, message: string): asserts value {
 admin.initializeApp();
 const db = admin.firestore();
 
+const increment0 = FieldValue.increment(0);
 const increment1 = FieldValue.increment(1);
+const increment3 = FieldValue.increment(3);
 
 export const onCreateUser = firestore
     .document('users/{userId}')
     .onCreate(async (change, context) => {
         change.ref.update({
-            score: FieldValue.increment(0), // safe way to init
+            score: increment0, // safe way to init
         });
     });
 
@@ -32,14 +34,14 @@ export const onInfluence = firestore
         const loc = change.data()?.loc as string;
         assert(loc, 'loc is undefined');
 
-        const sect = (await (
+        const sect = await(
             await db.doc(`users/${context.params.userId}`).get()
-        ).data()?.sect) as string;
+        ).data()?.sect as string;
         assert(sect, 'sect is undefined');
 
-        const limitHours = (await (
+        const limitHours = await(
             await db.doc('config/influence_limit_hours').get()
-        ).data()?.value) as number;
+        ).data()?.value as number;
         assert(limitHours, 'limitHours is undefined');
 
         logger.log('Influencing!', {
@@ -70,7 +72,19 @@ export const onInfluence = firestore
             return;
         }
 
+        // Is owner?
+        const owner = (
+            await db.collection('places').where('loc', '==', loc).get()
+        ).docs[0]?.data()?.owner;
+        const isOwner = owner === context.params.userId;
+        if (isOwner) {
+            logger.log('Is owner, boosting score', {
+                userId: context.params.userId,
+            });
+        }
+
         // Add scores
+        const inc = isOwner ? increment3 : increment1;
         const usersToAddScore = await db
             .collection('users')
             .where('sect', '==', sect)
@@ -83,7 +97,7 @@ export const onInfluence = firestore
         await Promise.all(
             usersToAddScore.docs.map(async (user) => {
                 await db.doc(`users/${user.id}`).update({
-                    score: increment1,
+                    score: inc,
                 });
             })
         );

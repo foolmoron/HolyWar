@@ -23,12 +23,12 @@ async function run() {
         const data = user.data();
         let line = '';
         if (user.id === userId) {
-            line += `<h3><b>${user.id}: ${data.score ?? 0}</b>`;
+            line += `<h3><b>${data.name}: ${data.score ?? 0}</b>`;
         } else {
-            line += `<h3>${user.id}: ${data.score ?? 0}`;
+            line += `<h3>${data.name}: ${data.score ?? 0}`;
         }
         if (user.id === sectLeaders[data.sect]) {
-            line += ` (Leader of ${data.sect})`;
+            line += `<br>(Leader of ${data.sect})`;
         }
         line += '</h3>';
         document.body.insertAdjacentHTML('beforeend', line);

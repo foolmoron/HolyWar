@@ -38,6 +38,12 @@ body::after {
 body.loaded::after {
     opacity: 0;
 }
+
+a {
+    font-weight: bold;
+    color: #8e47ff;
+}
+
 .title {
     margin: 0;
     font-size: 9vw;
@@ -52,4 +58,8 @@ body.loaded::after {
     border-radius: 0.6rem;
     padding: 0.6rem 1.2rem;
     margin-top: auto;
+}
+.submit-button[disabled] {
+    background: #ff9898de;
+    color: #0e0e0eb8;
 }
