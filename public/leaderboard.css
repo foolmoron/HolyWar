@@ -1,7 +1,6 @@
 
 li {
     padding: 0.3rem;
-    line-height: 1.5;
 }
 
 li:not(:last-child) {

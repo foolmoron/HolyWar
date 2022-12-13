@@ -30,8 +30,7 @@ body.hide-ui>* {
 }
 
 .influence-msg:not(:empty) {
-    padding: 0.8rem 1rem 1.5rem 1rem;
-    line-height: 1.2;
+    padding: 1rem;
     background: black;
-    border-radius: 1rem
+    border-radius: 1rem;
 }
