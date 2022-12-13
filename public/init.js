@@ -24,7 +24,7 @@ async function run() {
 
     const user = (await db.collection('users').doc(userId).get())?.data();
     if (user) {
-        location.pathname = '/scan.html';
+        location.pathname = '/scan';
         return;
     }
 
@@ -59,6 +59,6 @@ async function run() {
                 name,
                 sect: data.get('sect'),
             });
-        location.pathname = '/scan.html';
+        location.pathname = '/scan';
     });
 }

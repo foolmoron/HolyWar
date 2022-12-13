@@ -14,7 +14,7 @@ async function run() {
 
     const user = (await db.collection('users').doc(userId).get())?.data();
     if (!user) {
-        location.pathname = '/init.html';
+        location.pathname = '/init';
         return;
     }
     console.log('user', user);
@@ -29,11 +29,11 @@ async function run() {
 
     const place = (await db.collection('places').doc(loc).get()).data();
     if (!place) {
-        location.pathname = '/index.html';
+        location.pathname = '/index';
         return;
     }
     if (!place.owner) {
-        location.pathname = '/discover.html';
+        location.pathname = '/discover';
         return;
     }
 
@@ -130,7 +130,7 @@ async function run() {
                 .then((res) => res.size);
             document.querySelector(
                 '.influence-msg'
-            ).innerHTML = `Influenced location! <b>+${pts} points</b> to you and ${sectmateCount} other members of your sect. See the <a href="./leaderboard.html">Leaderboard</a> or the <a href="./index.html">Home page</a>.`;
+            ).innerHTML = `Influenced location! <b>+${pts} points</b> to you and ${sectmateCount} other members of your sect. See the <a href="./leaderboard">Leaderboard</a> or the <a href="./index">Home page</a>.`;
             latestInfluenceTime = Date.now();
         });
 

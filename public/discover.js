@@ -20,11 +20,11 @@ async function run() {
 
     const place = (await db.collection('places').doc(loc).get()).data();
     if (!place) {
-        location.pathname = '/index.html';
+        location.pathname = '/index';
         return;
     }
     if (place.owner) {
-        location.pathname = '/scan.html';
+        location.pathname = '/scan';
         return;
     }
 
@@ -67,7 +67,7 @@ async function run() {
         });
 
         // back to scan with the new location
-        location.pathname = '/scan.html';
+        location.pathname = '/scan';
     });
 
 }

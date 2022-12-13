@@ -9,7 +9,7 @@ async function run() {
 
     const user = (await db.collection('users').doc(userId).get())?.data();
     if (!user) {
-        location.pathname = '/init.html';
+        location.pathname = '/init';
         return;
     }
     console.log('user', user);
