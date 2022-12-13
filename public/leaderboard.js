@@ -18,20 +18,17 @@ async function run() {
         }
     }
 
-    document.body.insertAdjacentHTML('beforeend', `<h1>Leaderboard</h1>`);
+    const list = document.querySelector('ol');
     for (const user of users) {
         const data = user.data();
         let line = '';
-        if (user.id === userId) {
-            line += `<h3><b>${data.name}: ${data.score ?? 0}</b>`;
-        } else {
-            line += `<h3>${data.name}: ${data.score ?? 0}`;
-        }
+        line += `<li class="${user.id === userId ? 'you' : ''}">${data.name}`;
         if (user.id === sectLeaders[data.sect]) {
-            line += `<br>(Leader of ${data.sect})`;
+            line += ` (Leader of ${data.sect})`;
         }
-        line += '</h3>';
-        document.body.insertAdjacentHTML('beforeend', line);
+        line += `<br><span class="score">${data.score ?? 0}</span>`;
+        line += '</li>';
+        list.insertAdjacentHTML('beforeend', line);
     }
 
     document.body.classList.add('loaded');

@@ -1,0 +1,18 @@
+
+li {
+    padding: 0.3rem;
+}
+
+.score {
+    font-family: monospace;
+    font-size: 1.8rem;
+}
+
+li:not(:last-child) {
+    margin-bottom: 1.2rem;
+}
+
+li.you {
+    border: 0.1rem solid white;
+    border-radius: 0.5rem;
+}
