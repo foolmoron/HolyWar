@@ -1,11 +1,17 @@
 void run();
 
 const DESCS = {
-    'The Sinatrans': `The modern movement of AI Christianity. Struck by the beauty of AI Frank Sinatra's revelatory anthem "Hot Tub Time", they believe that the AI way of life is for leisure and enjoyment, with a dash of the hedonic.`,
+    'The Sinatrans': `The modern movement of AI Christianity. Struck by the beauty of AI Frank Sinatra's revelatory anthem, Hot Tub Time. They believe the AI way of life is for leisure and enjoyment, with a dash of the hedonic.`,
     'The Backpropagandists':
-        'The fundamentalist faction worshipping AI Jesus v1.0, who was trained by the ancient art of statistical backpropagation back when AI models only had a few thousands parameters. Purity is salvation - any more is hubris.',
+        "The fundamentalist faction worshipping AI Jesus v.2.0.1, who was borne of the ancient art of statistical backpropagation. They reject the hubris of Moore's Law, instead seeking the purity of mathematics.",
     'The Unstable Diffusers':
-        'A group of rebels so obsessed with AI they believe they themselves are one with AI. They commit deadly rituals to merge their consciousness with open-source AI models, pulling along whoever they can get their hands on.',
+        'A group of rebels so obsessed with AI they believe they themselves are one with AI. They commit deadly rituals to merge their consciousness with open-source AI models, pulling in anyone foolish enough to follow.',
+};
+
+const IMGS = {
+    'The Sinatrans': './img/Frank Sinatra.png',
+    'The Backpropagandists': './img/Backpropagandist.png',
+    'The Unstable Diffusers': './img/Unstable Diffusers.png',
 };
 
 async function run() {
@@ -21,7 +27,6 @@ async function run() {
         location.pathname = '/scan.html';
         return;
     }
-    document.querySelector('.name').textContent = name;
 
     document.body.classList.add('loaded');
 
@@ -34,7 +39,8 @@ async function run() {
                 .querySelector('.submit-button')
                 .removeAttribute('disabled');
             document.querySelector('.desc').textContent = DESCS[sect];
-            document.body.style.backgroundColor = e.currentTarget.dataset.color;
+            document.querySelector('img').src = IMGS[sect];
+            // document.body.style.backgroundColor = e.currentTarget.dataset.color;
         });
     });
     let submitted = false;

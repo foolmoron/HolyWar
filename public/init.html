@@ -4,6 +4,9 @@
     <title>Holy War | Init</title>
     <link rel="stylesheet" href="./main.css" />
     <link rel="stylesheet" href="./init.css" />
+    <link rel="prefetch" href="./img/Backpropagandist.png" />
+    <link rel="prefetch" href="./img/Frank Sinatra.png" />
+    <link rel="prefetch" href="./img/Unstable Diffusers.png" />
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
@@ -12,18 +15,22 @@
     <script defer src="./init.js"></script>
 </head>
 <body>
-    <h1>Welcome, <span class="name"></span>!</h1>
+    <h1>join a sect to fight in the great ai holy war</h1>
     <form>
-        <h3>Join a Sect to fight in the great AI Holy War:</h3>
         <input type="radio" name="sect" required id="sinatrans" value="The Sinatrans" data-color="#ffb326">
         <label for="sinatrans">The Sinatrans</label>
         <input type="radio" name="sect" required id="backprop" value="The Backpropagandists" data-color="#00e384">
         <label for="backprop">The Backpropagandists</label>
         <input type="radio" name="sect" required id="unstable" value="The Unstable Diffusers" data-color="#cc02bb">
         <label for="unstable">The Unstable Diffusers</label>
+        <img />
+        <hr>
         <p class="desc"></p>
-        <p style="margin-top: auto;">IMPORTANT: Memorize your chosen sect and keep it a secret from other players. You can lie
-            all you want, since there's no way to see what your current sect is in the game.</p>
+        <hr>
+        <h2 style="margin-top: auto;">IMPORTANT:</h2>
+        <p class="memorize">Memorize your chosen sect and keep it a secret from other players. It will not be shown to you again
+            in the game, so
+            you can lie all you want.</p>
         <input type="submit" class="submit-button" style="margin-top: unset;" value="Join..?" disabled />
     </form>
 </body>

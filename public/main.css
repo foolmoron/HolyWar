@@ -26,6 +26,7 @@ body {
 
 html {
     font-size: xx-large;
+    text-size-adjust: none;
 }
 body {
     background-color: black;
@@ -36,6 +37,9 @@ body {
     padding: 0.9rem 1.7rem;
     box-sizing: border-box;
     transition: background-color 0.8s;
+}
+input {
+    font-family: 'IM FELL English';
 }
 
 body::after {
@@ -74,10 +78,13 @@ a {
     align-self: center;
     font-size: 2.8rem;
     border-radius: 0.6rem;
-    padding: 0.6rem 1.2rem;
+    padding: 0.1rem 1.2rem 0.4rem;
     margin-top: auto;
+    border: none;
+    text-transform: lowercase;
 }
 .submit-button[disabled] {
-    background: #ff9898de;
-    color: #0e0e0eb8;
+    background-color: white;
+    color: black;
+    opacity: 0.5;
 }

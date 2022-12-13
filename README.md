@@ -1,6 +1,10 @@
 # Holy War
 QR multiplayer game
 
+### Credits
+Momin Khan - Code & Gameplay
+Rachel Maves - Graphic Design
+
 ### Run
 Run `http-server`
 
