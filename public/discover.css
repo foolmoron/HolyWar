@@ -17,7 +17,6 @@ textarea {
     max-height: 7rem;
     font-size: 2rem;
     margin-bottom: 1rem;
-    font-family: var(--font);
     line-height: 1;
     text-transform: lowercase;
 }

@@ -105,7 +105,7 @@ async function run() {
             influenceBtn.removeAttribute('disabled');
             influenceBtn.textContent = `Influence`;
             if (place.owner === userId) {
-                influenceBtn.textContent += ' (3x pts)';
+                influenceBtn.textContent += ' | 3x pts';
             }
         }
     }
@@ -130,7 +130,9 @@ async function run() {
                 .then((res) => res.size);
             document.querySelector(
                 '.influence-msg'
-            ).innerHTML = `Influenced location! <b>+${pts} points</b> to you and ${sectmateCount} other members of your sect. See the <a href="./leaderboard">Leaderboard</a> or the <a href="./index">Home page</a>.`;
+            ).innerHTML = `Influenced location! <b>+<span style="font-family: monospace;">${pts}</span> points</b> to you and <span style="font-family: monospace;">${sectmateCount}</span> other member${
+                sectmateCount > 1 ? 's' : ''
+            } of your sect. See the <a href="./leaderboard">leaderboard</a> or the <a href="./index">home page</a> for your current score.`;
             latestInfluenceTime = Date.now();
         });
 

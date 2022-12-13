@@ -15,9 +15,18 @@ body.hide-ui>* {
     display: none;
 }
 
+.desc {
+    font-size: 1.2rem;
+    line-height: 1.2;
+}
+
 .outlined {
     margin: 0;
-    text-shadow: 0.08em 0.08em 0px black, -0.08em -0.08em 0px black, 0.08em -0.08em 0px black, -0.08em 0.08em 0px black;
+    text-shadow: 0.12em 0.09em 0px black, 0.06em 0.06em 0px black, -0.06em -0.06em 0px black, 0.06em -0.06em 0px black, -0.06em 0.06em 0px black;
+}
+
+.submit-button {
+    border: 0.2rem solid black;
 }
 
 .influence-msg:not(:empty) {
