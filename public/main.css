@@ -16,6 +16,10 @@
     font-display: swap;
 }
 
+:root{
+    --font: 'IM FELL English';
+}
+
 html,
 body {
     height: 100%;
@@ -31,7 +35,7 @@ html {
 body {
     background-color: black;
     color: white;
-    font-family: 'IM FELL English';
+    font-family: var(--font);
     display: flex;
     flex-direction: column;
     padding: 0.9rem 1.7rem;
@@ -39,7 +43,7 @@ body {
     transition: background-color 0.8s;
 }
 input {
-    font-family: 'IM FELL English';
+    font-family: var(--font);
 }
 
 body::after {
@@ -64,6 +68,16 @@ body.loaded::after {
 a {
     font-weight: bold;
     color: #8e47ff;
+}
+
+h1  {
+    font-size: 3.1rem;
+    line-height: 2.2rem;
+    width: 78%;
+    align-self: center;
+    margin: 0;
+    margin-bottom: 1.6rem;
+    text-transform: lowercase;
 }
 
 .title {

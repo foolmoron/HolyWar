@@ -1,11 +1,11 @@
 p {
-    font-size: medium;
+    font-size: 1.1rem;
 }
+
 form {
     display: flex;
     flex-direction: column;
     height: -webkit-fill-available;
-    font-size: larger;
 }
 
 label {
@@ -13,10 +13,13 @@ label {
 }
 
 textarea {
-    height: 7rem;
+    height: 6.4rem;
     max-height: 7rem;
     font-size: 2rem;
     margin-bottom: 1rem;
+    font-family: var(--font);
+    line-height: 1;
+    text-transform: lowercase;
 }
 
 .generating-msg {
