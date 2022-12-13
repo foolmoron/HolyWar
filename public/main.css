@@ -1,3 +1,21 @@
+@font-face {
+    font-family: 'IM FELL English';
+    src: url('./fonts/IM_FELL_English_Italic.woff2') format('woff2'),
+        url('./fonts/IM_FELL_English_Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'IM FELL English';
+    src: url('./fonts/IM_FELL_English_Roman_SC.woff2') format('woff2'),
+        url('./fonts/IM_FELL_English_Roman_SC.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
 html,
 body {
     height: 100%;
@@ -12,7 +30,7 @@ html {
 body {
     background-color: black;
     color: white;
-    font-family: sans-serif;
+    font-family: 'IM FELL English';
     display: flex;
     flex-direction: column;
     padding: 0.9rem 1.7rem;
