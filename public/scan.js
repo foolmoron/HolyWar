@@ -1,5 +1,9 @@
 void run();
 
+function lerp(a, b, t) {
+    return a + (b - a) * t;
+}
+
 async function run() {
     const auth = await authUser();
     if (!auth) {
@@ -48,6 +52,12 @@ async function run() {
     // Orientation affects background
     let betaOrig = null;
     let gammaOrig = null;
+    let currentX = 0.5;
+    let currentY = 0.5;
+    let desiredX = 0.5;
+    let desiredY = 0.5;
+    let velX = 0.5;
+    let velY = 0.5;
     window.addEventListener(
         'deviceorientation',
         ({ beta, gamma }) => {
@@ -58,14 +68,43 @@ async function run() {
                 gammaOrig = gamma;
             }
 
-            const x = Math.max(-18, Math.min(18, gamma - gammaOrig)) / 36 + 0.5;
-            document.documentElement.style.setProperty('--bg-x', `${x * 100}%`);
-
-            const y = Math.max(-18, Math.min(18, beta - betaOrig)) / 36 + 0.5;
-            document.documentElement.style.setProperty('--bg-y', `${y * 100}%`);
+            desiredX =
+                Math.max(-16, Math.min(16, gamma - gammaOrig)) / 32 + 0.5;
+            desiredY = Math.max(-16, Math.min(16, beta - betaOrig)) / 32 + 0.5;
         },
         true
     );
+    let t = Date.now();
+    function updateBg() {
+        requestAnimationFrame(updateBg);
+        const dt = (Date.now() - t) / 1000;
+        t = Date.now();
+
+        const ACCEL = 0.2;
+        const VFACTOR = 1.5;
+        if (Math.abs(desiredX - currentX) < 0.001) {
+            currentX = desiredX;
+        } else {
+            velX = lerp(velX, desiredX - currentX, ACCEL);
+            currentX += velX * dt * VFACTOR;
+        }
+        if (Math.abs(desiredY - currentY) < 0.001) {
+            currentY = desiredY;
+        } else {
+            velY = lerp(velY, desiredY - currentY, ACCEL);
+            currentY += velY * dt * VFACTOR;
+        }
+
+        document.documentElement.style.setProperty(
+            '--bg-x',
+            `${currentX * 100}%`
+        );
+        document.documentElement.style.setProperty(
+            '--bg-y',
+            `${currentY * 100}%`
+        );
+    }
+    updateBg();
 
     // Tap body to hide ui
     document.body.addEventListener('click', (e) => {
