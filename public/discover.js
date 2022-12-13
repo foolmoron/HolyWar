@@ -10,6 +10,13 @@ async function run() {
     }
     const userId = auth.email;
 
+    const user = (await db.collection('users').doc(userId).get())?.data();
+    if (!user) {
+        location.pathname = '/init';
+        return;
+    }
+    console.log('user', user);
+
     const url = new URL(window.location.href);
     const loc = url.searchParams.get('loc');
     console.log('loc', loc);

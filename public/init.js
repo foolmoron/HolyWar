@@ -59,6 +59,6 @@ async function run() {
                 name,
                 sect: data.get('sect'),
             });
-        location.pathname = '/scan';
+        history.back();
     });
 }
