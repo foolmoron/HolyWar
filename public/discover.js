@@ -111,7 +111,7 @@ async function getImage(key, prompt) {
         },
         body: JSON.stringify({
             prompt,
-            size: '512x512',
+            size: '1024x1024',
             n: 1,
         }),
     }).then((res) => res.json());
