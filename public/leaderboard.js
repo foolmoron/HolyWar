@@ -26,7 +26,9 @@ async function run() {
         if (user.id === sectLeaders[data.sect]) {
             line += ` (Leader of ${data.sect})`;
         }
-        line += `<br><span class="score">${data.score ?? 0}</span>`;
+        line += `<br><span class="score">${(
+            data.score ?? 0
+        ).toLocaleString()}</span>`;
         line += '</li>';
         list.insertAdjacentHTML('beforeend', line);
     }

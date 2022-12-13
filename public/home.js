@@ -21,7 +21,9 @@ async function run() {
     document.body.insertAdjacentHTML('beforeend', `<h1>${user.name}</h1>`);
     document.body.insertAdjacentHTML(
         'beforeend',
-        `<h4>Score: ${user.score ?? 0}</h4>`
+        `<h3>Score: <span class="score">${(
+            user.score ?? 0
+        ).toLocaleString()}</span></h3>`
     );
 
     document.body.insertAdjacentHTML('beforeend', `<h2>Owned Locations</h2>`);
@@ -29,7 +31,7 @@ async function run() {
         const data = loc.data();
         document.body.insertAdjacentHTML(
             'beforeend',
-            `<h4><a href="./scan?loc=${loc.id}">${loc.data().title}</a></h4>`
+            `<a href="./scan?loc=${loc.id}"><h4>${loc.data().title}</h4></a>`
         );
     }
 
@@ -44,11 +46,11 @@ async function run() {
         const data = influence.data();
         document.body.insertAdjacentHTML(
             'beforeend',
-            `<h4>${new Date(
+            `<a href="./scan?loc=${
+                data.loc
+            }"><h4><span style="color: white;">${new Date(
                 data.time
-            ).toLocaleString()}:<br><a href="./scan?loc=${data.loc}">${
-                data.title
-            }</a></h4>`
+            ).toLocaleString()}:</span><br>${data.title}</h4></a>`
         );
     }
 

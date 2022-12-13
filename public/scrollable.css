@@ -1,0 +1,10 @@
+
+html,
+body {
+    overflow: unset;
+    height: unset;
+}
+
+body {
+    padding-bottom: 10rem;
+}
