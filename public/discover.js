@@ -86,6 +86,12 @@ async function getCompletion(key, prompt) {
             max_tokens: 256,
         }),
     }).then((res) => res.json());
+    if (data.error) {
+        const message = `The AI ran into the following error! Try again.\n\n${data.error.message}`;
+        alert(message);
+        location.reload();
+        throw new Error(data.error);
+    }
     return data.choices[0].text.trim();
 }
 
@@ -102,5 +108,11 @@ async function getImage(key, prompt) {
             n: 1,
         }),
     }).then((res) => res.json());
+    if (data.error) {
+        const message = `The AI ran into the following error! If it mentions the "safety system", it's because you have something "offensive" in your input. Try again with something more Christian. \n\n${data.error.message}`;
+        alert(message);
+        location.reload();
+        throw new Error(data.error);
+    }
     return data.data[0].url;
 }
