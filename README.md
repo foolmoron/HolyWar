@@ -2,8 +2,8 @@
 QR multiplayer game
 
 ### Credits
-Momin Khan - Code & Gameplay
-Rachel Maves - Graphic Design
+Momin Khan - Code, Gameplay, Graphic Design (the bad parts)
+Rachel Maves - Graphic Design (the good parts)
 
 ### Run
 Run `http-server`

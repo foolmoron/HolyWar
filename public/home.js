@@ -25,6 +25,10 @@ async function run() {
             user.score ?? 0
         ).toLocaleString()}</span></h3>`
     );
+    document.body.insertAdjacentHTML(
+        'beforeend',
+        `<a href="./leaderboard"><h4>see full leaderboard</h4></a>`
+    );
 
     document.body.insertAdjacentHTML('beforeend', `<h2>Owned Locations</h2>`);
     for (const loc of ownedLocations) {
