@@ -46,6 +46,10 @@ async function run() {
 
     //  "you found: Location X"
     document.querySelector('.title').innerHTML = place.title;
+    document.querySelector('.owned').innerHTML =
+        place.owner === userId
+            ? `discovered by YOU (3x influence here)`
+            : `discovered by ${place.ownerName}`;
     document.querySelector('.desc').innerHTML = place.desc;
     document.documentElement.style.setProperty(
         '--bg-img',
