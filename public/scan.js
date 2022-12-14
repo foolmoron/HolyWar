@@ -57,8 +57,6 @@ async function run() {
     );
 
     // Orientation affects background
-    let betaOrig = null;
-    let gammaOrig = null;
     let currentX = 0.5;
     let currentY = 0.5;
     let desiredX = 0.5;
@@ -68,16 +66,8 @@ async function run() {
     window.addEventListener(
         'deviceorientation',
         ({ beta, gamma }) => {
-            if (betaOrig === null) {
-                betaOrig = beta;
-            }
-            if (gammaOrig === null) {
-                gammaOrig = gamma;
-            }
-
-            desiredX =
-                Math.max(-16, Math.min(16, gamma - gammaOrig)) / 32 + 0.5;
-            desiredY = Math.max(-16, Math.min(16, beta - betaOrig)) / 32 + 0.5;
+            desiredX = Math.max(-16, Math.min(16, gamma)) / 32 + 0.5;
+            desiredY = Math.max(-16, Math.min(16, beta)) / 32 + 0.5;
         },
         true
     );
