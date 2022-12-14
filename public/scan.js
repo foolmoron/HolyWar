@@ -11,6 +11,9 @@ async function run() {
     }
     const userId = auth.email;
     const influenceBtn = document.querySelector('.influence');
+    const influenceMsg = document.querySelector('.influence-msg');
+    const convertBtn = document.querySelector('.convert');
+    const convertMsg = document.querySelector('.convert-msg');
 
     const limitHours =
         (await (await db.doc('config/influence_limit_hours').get()).data()
@@ -111,6 +114,30 @@ async function run() {
         document.body.classList.toggle('hide-ui');
     });
 
+    // Most influential sect
+    const recentInfluences = (
+        await db
+            .collectionGroup(`influences`)
+            .where('loc', '==', loc)
+            .orderBy('time', 'desc')
+            .limit(10)
+            .get()
+    ).docs.map((doc) => doc.data());
+    const sectInfluences = {};
+    let topSect = null;
+    for (const influence of recentInfluences) {
+        sectInfluences[influence.sect] =
+            (sectInfluences[influence.sect] ?? 0) + influence.points;
+    }
+    function updateConvertButton() {
+        topSect = Object.entries(sectInfluences).sort(
+            ([, a], [, b]) => b - a
+        )[0]?.[0];
+        convertMsg.textContent = `${topSect} have been the most influential sect here. You can follow them, if you dare.`;
+        convertBtn.textContent = `Convert to ${topSect}`;
+    }
+    updateConvertButton();
+
     // Disable button with timer
     let latestInfluenceTime =
         (
@@ -134,19 +161,22 @@ async function run() {
     function updateButton() {
         const timeToNextInfluence =
             latestInfluenceTime +
-            30 * 1000 + // little extra buffer
+            5 * 1000 + // little extra buffer
             limitHours * 60 * 60 * 1000 -
             Date.now();
-        if (timeToNextInfluence > 0) {
-            influenceBtn.setAttribute('disabled', 'disabled');
-            influenceBtn.textContent = secsToString(timeToNextInfluence / 1000);
-        } else {
+        const canInfluence = timeToNextInfluence <= 0;
+        if (canInfluence) {
             influenceBtn.removeAttribute('disabled');
             influenceBtn.textContent = `Influence`;
             if (place.owner === userId) {
                 influenceBtn.textContent += ' | 3x pts';
             }
+        } else {
+            // influenceBtn.setAttribute('disabled', 'disabled');
+            influenceBtn.textContent = secsToString(timeToNextInfluence / 1000);
         }
+        convertBtn.style.display = !canInfluence && topSect ? 'unset' : 'none';
+        convertMsg.style.display = !canInfluence && topSect ? 'unset' : 'none';
     }
     setInterval(updateButton, 500);
     updateButton();
@@ -156,24 +186,42 @@ async function run() {
         .querySelector('.influence')
         .addEventListener('click', async (e) => {
             e.stopPropagation();
+            const points = place.owner === userId ? 3 : 1;
             await db.collection(`users/${userId}/influences`).add({
                 loc,
+                points,
+                sect: user.sect,
                 title: place.title,
             });
             document.body.classList.add('influenced');
-            const pts = place.owner === userId ? 3 : 1;
             const sectmateCount = await db
                 .collection('users')
                 .where('sect', '==', user.sect)
                 .get()
                 .then((res) => res.size);
-            document.querySelector(
-                '.influence-msg'
-            ).innerHTML = `Influenced location! <b>+<span style="font-family: monospace;">${pts}</span> points</b> to you and <span style="font-family: monospace;">${sectmateCount}</span> other member${
+            influenceMsg.innerHTML = `Influenced location! <b>+<span style="font-family: monospace;">${points}</span> points</b> to you and <span style="font-family: monospace;">${sectmateCount}</span> other member${
                 sectmateCount > 1 ? 's' : ''
             } of your sect. See the <a href="./leaderboard">leaderboard</a> or the <a href="./index">home page</a> for your current score.`;
             latestInfluenceTime = Date.now();
+
+            sectInfluences[user.sect] =
+                (sectInfluences[user.sect] ?? 0) + points;
+            updateConvertButton();
         });
+
+    // Press to convert
+    convertBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        if (confirm(`Are you sure you want to convert to ${topSect}?`)) {
+            await db.doc(`users/${userId}`).update({
+                sect: topSect,
+            });
+            alert(
+                `You are now part of ${topSect}! MEMORIZE IT since it won't be shown to you again!!!`
+            );
+            location.pathname = '/index';
+        }
+    });
 
     setTimeout(() => {
         document.body.classList.add('loaded');

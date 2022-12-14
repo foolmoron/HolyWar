@@ -71,6 +71,7 @@ async function run() {
             imageUrl,
             prompt: p,
             owner: userId,
+            ownerName: user.name,
         });
 
         // back to scan with the new location

@@ -12,7 +12,7 @@ body {
 }
 
 body.hide-ui>* {
-    display: none;
+    display: none !important;
 }
 
 .desc {
@@ -36,4 +36,18 @@ body.hide-ui>* {
     background: var(--black);
     border: 0.18rem solid var(--highlight);
     border-radius: 0.3rem;
+}
+
+.convert {
+    background: white;
+    color: var(--black);
+    padding: 0rem 1rem 0.2rem 1rem;
+    border-radius: 0.3rem;
+    font-size: 1.4rem;
+    border: 0.18rem solid var(--black);
+    text-transform: lowercase;
+}
+
+.convert-msg {
+    font-size: 1.1rem;
 }

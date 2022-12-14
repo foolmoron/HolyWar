@@ -55,7 +55,9 @@ async function run() {
                 data.loc
             }"><h4><span style="color: white;">${new Date(
                 data.time
-            ).toLocaleString()}:</span><br>${data.title}</h4></a>`
+            ).toLocaleString()}${
+                data.points > 1 ? ' (3x pts)' : ''
+            }:</span><br>${data.title}</h4></a>`
         );
     }
 
