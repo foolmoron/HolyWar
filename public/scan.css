@@ -5,6 +5,7 @@
 }
 
 body {
+    border: none;
     background-size: cover;
     background-image: var(--bg-img);
     background-position: var(--bg-x) var(--bg-y);
@@ -25,11 +26,14 @@ body.hide-ui>* {
 }
 
 .submit-button {
-    border: 0.2rem solid black;
+    border: 0.18rem solid var(--highlight);
+    background-color: var(--black);
+    color: white;
 }
 
 .influence-msg:not(:empty) {
     padding: 1rem;
-    background: black;
-    border-radius: 1rem;
+    background: var(--black);
+    border: 0.18rem solid var(--highlight);
+    border-radius: 0.3rem;
 }

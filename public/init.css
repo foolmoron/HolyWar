@@ -8,12 +8,12 @@ input[type='radio'] {
 
 label {
     width: 75%;
-    background: black;
+    background: transparent;
     color: white;
     padding: 0rem 1.5rem 0.2rem 1.5rem;
-    border-radius: 0.5rem;
+    border-radius: 0.3rem;
     font-size: 1.5rem;
-    border: 0.2rem solid white;
+    border: 0.18rem solid var(--highlight);
     text-transform: lowercase;
 }
 
@@ -27,7 +27,7 @@ hr {
     padding: 0.05rem 0;
     border: none;
     display: inline-block;
-    background: white;
+    background: var(--highlight);
 }
 
 h2 {
@@ -43,9 +43,13 @@ p {
 
 img {
     filter: invert(1);
-}
-img[src] {
     height: 8rem;
+}
+img:not([src]) {
+    display: none;
+}
+img:not([src])+hr {
+    display: none;
 }
 
 form {
@@ -54,12 +58,11 @@ form {
     align-items: center;
     justify-content: center;
     height: -webkit-fill-available;
-    gap: 1rem;
+    gap: 0.9rem;
 }
 
 .desc {
     padding: 0 1rem;
-    border-radius: 1rem;
     font-size: 1.1rem;
     line-height: 1.2;
 }

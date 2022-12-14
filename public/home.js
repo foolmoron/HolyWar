@@ -21,9 +21,9 @@ async function run() {
     document.body.insertAdjacentHTML('beforeend', `<h1>${user.name}</h1>`);
     document.body.insertAdjacentHTML(
         'beforeend',
-        `<h3>Score: <span class="score">${(
+        `<h2>Score: <span class="score">${(
             user.score ?? 0
-        ).toLocaleString()}</span></h3>`
+        ).toLocaleString()}</span></h2>`
     );
     document.body.insertAdjacentHTML(
         'beforeend',
@@ -44,6 +44,7 @@ async function run() {
         await db
             .collection(`users/${userId}/influences`)
             .orderBy('time', 'desc')
+            .limit(10)
             .get()
     )?.docs;
     for (const influence of recentInfluences) {

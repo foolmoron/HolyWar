@@ -28,6 +28,19 @@ async function run() {
         return;
     }
 
+    // Randomize sects
+    const els = [...document.querySelectorAll('.randomize')];
+    const rands = new Map(els.map((el) => [el, Math.random()]));
+    els.sort((a, b) => rands.get(a) - rands.get(b));
+    for (const el of els) {
+        for (const c of [...el.childNodes].reverse()) {
+            if (c instanceof HTMLElement) {
+                el.parentElement.insertAdjacentElement('afterbegin', c);
+            }
+        }
+        el.remove();
+    }
+
     document.body.classList.add('loaded');
 
     // Select sect and submit

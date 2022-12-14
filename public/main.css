@@ -18,6 +18,8 @@
 
 :root{
     --font: 'IM FELL English';
+    --black: #22252f;
+    --highlight: #c99f60;
 }
 
 html,
@@ -33,22 +35,35 @@ html {
     text-size-adjust: none;
 }
 body {
-    background-color: black;
+    background-color: var(--black);
     color: white;
     font-family: var(--font);
     display: flex;
     flex-direction: column;
-    padding: 0.9rem 1.7rem;
+    padding: 1.2rem 1.8rem 1.6rem;
     box-sizing: border-box;
     transition: background-color 0.8s;
+
+    border-image: url(./img/border.svg);
+    border-image-slice: 38;
+    border-image-width: 3.5rem;
+    border-width: 1px;
+    border-style: inset;
 }
 input, button, textarea {
     font-family: var(--font);
 }
 
+textarea {
+    border: none;
+}
+textarea:focus, textarea:focus-visible {
+    outline: 0.18rem solid var(--highlight);
+}
+
 body::after {
     content: ' ';
-    background-color: black;
+    background-color: var(--black);
     display: block;
     position: absolute;
     top: 0;
@@ -91,15 +106,17 @@ h1  {
 .submit-button {
     align-self: center;
     font-size: 2.8rem;
-    border-radius: 0.6rem;
+    border-radius: 0.3rem;
     padding: 0.1rem 1.2rem 0.4rem;
     margin-top: auto;
     border: none;
     text-transform: lowercase;
+    min-width: 14rem;
 }
 .submit-button[disabled] {
     background-color: white;
     color: black;
+    border-color: var(--black);
     opacity: 0.5;
 }
 

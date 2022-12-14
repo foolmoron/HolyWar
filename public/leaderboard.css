@@ -8,6 +8,6 @@ li:not(:last-child) {
 }
 
 li.you {
-    border: 0.15rem solid white;
-    border-radius: 0.5rem;
+    border: 0.15rem solid var(--highlight);
+    border-radius: 0.3rem;
 }
