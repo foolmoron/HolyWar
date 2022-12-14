@@ -15,13 +15,13 @@
 
 <body>
     <h1 class="title">You discovered an abandoned location!</h1>
-    <p>
-        enter 3 tenets to build this location in your vision and claim it as your own.
-        <br><br>
-        tip: use short phrases, ideas, or nouns that will produce fun results from the ai. anything goes!
-        <br><br>
-    </p>
     <form>
+        <p>
+            enter 3 tenets to build this location in your vision and claim it as your own.
+            <br><br>
+            tip: use short phrases, ideas, or nouns that will produce fun results from the ai. anything goes!
+            <br><br>
+        </p>
         <label for="tenet1">Tenet 1:</label>
         <textarea id="tenet1" name="tenet1" required minlength="3" maxlength="100"></textarea>
         <label for="tenet2">Tenet 2:</label>
@@ -30,6 +30,12 @@
         <textarea id="tenet3" name="tenet3" required minlength="3" maxlength="100"></textarea>
         <input type="submit" class="submit-button" value="Build & Claim" />
     </form>
+    <div class="abandon">
+        <label>but you can only be the owner of <span class="max-place"></span> places!</label>
+        <br>
+        <label>pick a place to abandon permanently. others will be able to re-discover and claim it for themselves.</label>
+        <br>
+    </div>
     <h1 class="title generating-msg">Generating... wait about 15 seconds!</h1>
 </body>
 

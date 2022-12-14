@@ -48,3 +48,29 @@ body.generating *:not(.generating-msg) {
 body.generating .generating-msg {
     display: unset;
 }
+
+.abandon {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+}
+.abandon > div {
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    border: 0.18rem solid var(--highlight);
+    border-radius: 0.3rem;
+    text-align: center;
+    min-height: 4rem;
+    margin-bottom: 1.6rem;
+    text-decoration: line-through;
+}
+
+body:not(.must-abandon) .abandon {
+    display: none;
+}
+body.must-abandon form {
+    display: none;
+}

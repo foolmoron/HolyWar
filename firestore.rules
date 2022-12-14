@@ -16,7 +16,10 @@ service cloud.firestore {
       allow create, update: if authed() && request.auth.token.email == userId
     }
     match /places/{placeId} {
-      allow update: if authed() && !defined("owner", get(/databases/$(database)/documents/places/$(placeId)).data)
+      allow update: if authed() && (
+      	!defined("owner", get(/databases/$(database)/documents/places/$(placeId)).data) ||
+        get(/databases/$(database)/documents/places/$(placeId)).data.owner == request.auth.token.email
+      )
     }
   }
 }

@@ -35,6 +35,44 @@ async function run() {
         return;
     }
 
+    // Must abandon if you own too many
+    const currentlyOwned = (
+        await db.collection('places').where('owner', '==', userId).get()
+    ).docs;
+    const maxOwned = (
+        await db.collection('config').doc('max_places_owned').get()
+    ).data().value;
+    document.querySelector('.max-place').textContent = maxOwned;
+    if (currentlyOwned.length >= maxOwned) {
+        document.body.classList.add('must-abandon');
+
+        const abandonContainer = document.querySelector('.abandon');
+        abandonContainer.addEventListener('click', async (e) => {
+            e.stopPropagation();
+            if (
+                !e.target.dataset.id ||
+                !confirm(
+                    `Abandon place "${e.target.dataset.title}" permanently?`
+                )
+            ) {
+                return;
+            }
+            await db.collection('places').doc(e.target.dataset.id).update({
+                owner: null,
+                ownerName: null,
+            });
+            location.reload();
+        });
+
+        for (const owned of currentlyOwned) {
+            const data = owned.data();
+            abandonContainer.insertAdjacentHTML(
+                'beforeend',
+                `<div data-id="${owned.id}" data-title="${data.title}">${data.title}</div>`
+            );
+        }
+    }
+
     document.body.classList.add('loaded');
 
     let submitted = false;
@@ -77,7 +115,6 @@ async function run() {
         // back to scan with the new location
         location.pathname = '/scan';
     });
-
 }
 
 async function getCompletion(key, prompt) {
