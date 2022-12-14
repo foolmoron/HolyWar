@@ -18,7 +18,10 @@ async function run() {
         await db.collection('places').where('owner', '==', userId).get()
     )?.docs;
 
-    document.body.insertAdjacentHTML('beforeend', `<h1>${user.name}</h1>`);
+    document.body.insertAdjacentHTML(
+        'beforeend',
+        `<h1 class="title">${user.name}</h1>`
+    );
     document.body.insertAdjacentHTML(
         'beforeend',
         `<h2>Score: <span class="score">${(

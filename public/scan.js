@@ -166,11 +166,11 @@ async function run() {
                 influenceBtn.textContent += ' | 3x pts';
             }
         } else {
-            // influenceBtn.setAttribute('disabled', 'disabled');
+            influenceBtn.setAttribute('disabled', 'disabled');
             influenceBtn.textContent = secsToString(timeToNextInfluence / 1000);
         }
-        convertBtn.style.display = !canInfluence && topSect ? 'unset' : 'none';
-        convertMsg.style.display = !canInfluence && topSect ? 'unset' : 'none';
+        convertBtn.style.display = !canInfluence && topSect ? null : 'none';
+        convertMsg.style.display = !canInfluence && topSect ? null : 'none';
     }
     setInterval(updateButton, 500);
     updateButton();
@@ -196,6 +196,7 @@ async function run() {
             influenceMsg.innerHTML = `Influenced location! <b>+<span style="font-family: monospace;">${points}</span> points</b> to you and <span style="font-family: monospace;">${sectmateCount}</span> other member${
                 sectmateCount > 1 ? 's' : ''
             } of your sect. See the <a href="./leaderboard">leaderboard</a> or the <a href="./index">home page</a> for your current score.`;
+            influenceMsg.style.display = null;
             latestInfluenceTime = Date.now();
 
             sectInfluences[user.sect] =
