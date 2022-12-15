@@ -33,6 +33,8 @@ async function authUser() {
         console.error(e);
     }
 
+    await new Promise((res) => setTimeout(res, 5000));
+
     // No existing auth, try to sign in
     await auth.signInWithRedirect(provider);
 }
