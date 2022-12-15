@@ -2,6 +2,20 @@
   "indexes": [
     {
       "collectionGroup": "influences",
+      "queryScope": "COLLECTION_GROUP",
+      "fields": [
+        {
+          "fieldPath": "loc",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "time",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "influences",
       "queryScope": "COLLECTION",
       "fields": [
         {
@@ -11,6 +25,20 @@
         {
           "fieldPath": "time",
           "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "influences",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "loc",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "time",
+          "order": "DESCENDING"
         }
       ]
     }
