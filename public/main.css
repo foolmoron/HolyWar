@@ -25,9 +25,9 @@
 html,
 body {
     height: 100%;
+    height: 100dvh;
     margin: 0;
     padding: 0;
-    overflow: hidden;
 }
 
 html {
@@ -70,6 +70,7 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
+    height: 100dvh;
     opacity: 1;
     transition: opacity 0.4s 0.1s;
     z-index: 100;
@@ -86,18 +87,18 @@ a {
 }
 
 h1  {
-    font-size: 3.1rem;
-    line-height: 2.2rem;
-    width: 78%;
+    font-size: 2.6rem;
+    line-height: 1.9rem;
+    width: 92%;
     align-self: center;
     margin: 0;
-    margin-bottom: 1.6rem;
+    margin-bottom: 1rem;
     text-transform: lowercase;
 }
 
 .title {
     margin: 0;
-    font-size: 9vw;
+    font-size: 8vw;
     text-shadow: 0.09em 0.06em 0px black, 0.04em 0.04em 0px black, -0.04em -0.04em 0px black,
         0.04em -0.04em 0px black, -0.04em 0.04em 0px black;
     text-align: center;

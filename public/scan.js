@@ -192,7 +192,7 @@ async function run() {
                 .where('sect', '==', user.sect)
                 .get()
                 .then((res) => res.size);
-            influenceMsg.innerHTML = `Influenced location! <b>+<span style="font-family: monospace;">${points}</span> points</b> to you and <span style="font-family: monospace;">${sectmateCount}</span> other member${
+            influenceMsg.innerHTML = `Influenced location! <b>+<span style="font-family: monospace;">${points}</span> points</b> to you and <span style="font-family: monospace;">${sectmateCount}</span> other follower${
                 sectmateCount > 1 ? 's' : ''
             } of your sect. See the <a href="./leaderboard">leaderboard</a> or the <a href="./index">home page</a> for your current score.`;
             influenceMsg.style.display = null;
