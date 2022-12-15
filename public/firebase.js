@@ -21,7 +21,7 @@ async function authUser() {
             return cachedUser;
         }
     } catch (e) {
-        console.error(e);
+        alert('1:' + JSON.stringify(e));
     }
 
     try {
@@ -30,10 +30,8 @@ async function authUser() {
             return res.user;
         }
     } catch (e) {
-        console.error(e);
+        alert('2:' + JSON.stringify(e));
     }
-
-    await new Promise((res) => setTimeout(res, 5000));
 
     // No existing auth, try to sign in
     await auth.signInWithRedirect(provider);
