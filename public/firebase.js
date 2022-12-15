@@ -46,10 +46,7 @@ async function authUser() {
         const email = prompt('Email:');
         const password = prompt('Password:');
         try {
-            const res = await auth.createUserWithEmailAndPassword(
-                email,
-                password
-            );
+            const res = await auth.signInWithEmailAndPassword(email, password);
             if (res.user) {
                 return res.user;
             }
