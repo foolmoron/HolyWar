@@ -9,7 +9,6 @@ async function run() {
     if (!auth) {
         return;
     }
-    alert(4);
     const userId = auth.email;
     const influenceBtn = document.querySelector('.influence');
     const influenceMsg = document.querySelector('.influence-msg');
@@ -19,16 +18,13 @@ async function run() {
     const limitHours =
         (await (await db.doc('config/influence_limit_hours').get()).data()
             ?.value) ?? 8;
-    alert(5);
 
     const user = (await db.collection('users').doc(userId).get())?.data();
-    alert(6);
     if (!user) {
         location.pathname = '/init';
         return;
     }
     console.log('user', user);
-    alert(7);
 
     const url = new URL(window.location.href);
     const loc = url.searchParams.get('loc');
