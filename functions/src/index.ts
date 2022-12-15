@@ -97,6 +97,7 @@ export const onInfluence = firestore
             sect,
             userCount: usersToAddScore.size,
             userIds: usersToAddScore.docs.map((user) => user.id),
+            score: isOwner ? 3 : 1,
         });
         await Promise.all(
             usersToAddScore.docs.map(async (user) => {
