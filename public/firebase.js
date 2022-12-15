@@ -12,7 +12,7 @@ const db = firebase.firestore();
 
 async function authUser() {
     const provider = new firebase.auth.GoogleAuthProvider();
-
+    alert(0);
     try {
         const cachedUser = await new Promise((resolve) => {
             auth.onAuthStateChanged(resolve);
@@ -23,6 +23,7 @@ async function authUser() {
     } catch (e) {
         alert('1:' + JSON.stringify(e));
     }
+    alert(1);
 
     try {
         const res = await auth.getRedirectResult();
@@ -32,7 +33,9 @@ async function authUser() {
     } catch (e) {
         alert('2:' + JSON.stringify(e));
     }
+    alert(2);
 
     // No existing auth, try to sign in
     await auth.signInWithRedirect(provider);
+    alert(3);
 }
