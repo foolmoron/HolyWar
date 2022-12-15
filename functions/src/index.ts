@@ -74,9 +74,7 @@ export const onInfluence = firestore
         }
 
         // Is owner?
-        const owner = (
-            await db.collection('places').where('loc', '==', loc).get()
-        ).docs[0]?.data()?.owner;
+        const owner = (await db.doc(`places/${loc}`).get()).data()?.owner;
         const isOwner = owner === context.params.userId;
         if (isOwner) {
             logger.log('Is owner, boosting score', {
