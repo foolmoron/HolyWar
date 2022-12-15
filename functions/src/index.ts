@@ -47,6 +47,7 @@ export const onInfluence = firestore
         logger.log('Influencing!', {
             loc,
             sect,
+            userId: context.params.userId,
         });
 
         // Check for prev within limit
@@ -85,6 +86,9 @@ export const onInfluence = firestore
 
         // Add scores
         const inc = isOwner ? increment3 : increment1;
+        await change.ref.update({
+            score: inc,
+        });
         const usersToAddScore = await db
             .collection('users')
             .where('sect', '==', sect)
