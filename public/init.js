@@ -46,6 +46,7 @@ async function run() {
     // Select sect and submit
     document.querySelectorAll("input[name='sect']").forEach((radio) => {
         radio.addEventListener('change', (e) => {
+            document.body.classList.add('selected');
             const sect = e.currentTarget.value;
             document.querySelector('.submit-button').value = `Join ${sect}`;
             document
