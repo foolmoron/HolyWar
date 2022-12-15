@@ -180,6 +180,7 @@ async function run() {
         .querySelector('.influence')
         .addEventListener('click', async (e) => {
             e.stopPropagation();
+            const points = place.owner === userId ? 3 : 1;
             await db.collection(`users/${userId}/influences`).add({
                 loc,
                 sect: user.sect,
