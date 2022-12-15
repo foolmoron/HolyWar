@@ -38,15 +38,24 @@ async function authUser() {
     // No existing auth, try to sign in
     if (
         confirm(
-            "Press OK to sign in Google. Press Cancel to sign in with a password if you're having Google troubles."
+            "Press OK to sign in with Google (default). Press Cancel to sign in with a password if you're having Google troubles."
         )
     ) {
         await auth.signInWithRedirect(googleProvider);
     } else {
         const email = prompt('Email:');
         const password = prompt('Password:');
-        const res = auth.createUserWithEmailAndPassword(email, password);
-        return res.user;
+        try {
+            const res = await auth.createUserWithEmailAndPassword(
+                email,
+                password
+            );
+            if (res.user) {
+                return res.user;
+            }
+        } catch (e) {
+            alert('3:' + JSON.stringify(e));
+        }
     }
     alert(3);
 }
