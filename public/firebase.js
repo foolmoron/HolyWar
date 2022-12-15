@@ -11,7 +11,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 async function authUser() {
-    const provider = new firebase.auth.GoogleAuthProvider();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
     alert(0);
     try {
         const cachedUser = await new Promise((resolve) => {
@@ -36,6 +36,17 @@ async function authUser() {
     alert(2);
 
     // No existing auth, try to sign in
-    await auth.signInWithRedirect(provider);
+    if (
+        confirm(
+            "Press OK to sign in Google. Press Cancel to sign in with a password if you're having Google troubles."
+        )
+    ) {
+        await auth.signInWithRedirect(googleProvider);
+    } else {
+        const email = prompt('Email:');
+        const password = prompt('Password:');
+        const res = auth.createUserWithEmailAndPassword(email, password);
+        return res.user;
+    }
     alert(3);
 }
