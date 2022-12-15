@@ -57,8 +57,6 @@ async function run() {
     );
 
     // Orientation affects background
-    const MAX_ROT_DESIRED = 20;
-    const MAX_ROT_ACTUAL = 12;
     let currentX = 0.5;
     let currentY = 0.5;
     let desiredX = 0.5;
@@ -68,8 +66,8 @@ async function run() {
     window.addEventListener(
         'deviceorientation',
         ({ beta, gamma }) => {
-            desiredX = Math.max(-MAX_ROT, Math.min(MAX_ROT, gamma)) / 24 + 0.5;
-            desiredY = Math.max(-MAX_ROT, Math.min(MAX_ROT, beta)) / 24 + 0.5;
+            desiredX = Math.max(-10, Math.min(10, gamma)) / 20 + 0.5;
+            desiredY = Math.max(-10, Math.min(10, beta)) / 20 + 0.5;
         },
         true
     );
@@ -85,19 +83,13 @@ async function run() {
             currentX = desiredX;
         } else {
             velX = lerp(velX, desiredX - currentX, ACCEL);
-            currentX += Math.max(
-                -MAX_ROT_ACTUAL,
-                Math.min(MAX_ROT_ACTUAL, velX * dt * VFACTOR)
-            );
+            currentX = Math.max(0, Math.min(1, currentX + velX * dt * VFACTOR));
         }
         if (Math.abs(desiredY - currentY) < 0.001) {
             currentY = desiredY;
         } else {
             velY = lerp(velY, desiredY - currentY, ACCEL);
-            currentY += Math.max(
-                -MAX_ROT_ACTUAL,
-                Math.min(MAX_ROT_ACTUAL, velY * dt * VFACTOR)
-            );
+            currentY = Math.max(0, Math.min(1, currentY + velY * dt * VFACTOR));
         }
 
         document.documentElement.style.setProperty(
