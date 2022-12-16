@@ -35,7 +35,7 @@ async function authUser() {
     // No existing auth, try to sign in
     if (
         confirm(
-            "Press OK to sign in with Google (default). Press Cancel to sign in with a password if you're having Google troubles."
+            "Press OK to sign in with Google (default). If you're having Google troubles, press Cancel to sign in with a password (ask Momin for it)."
         )
     ) {
         await auth.signInWithRedirect(googleProvider);
