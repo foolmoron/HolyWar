@@ -22,7 +22,11 @@
     --highlight: #c99f60;
 }
 
-html,
+html {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     height: 100%;
     height: 100dvh;
