@@ -42,11 +42,10 @@ async function authUser() {
     } else {
         const email = prompt('Email:');
         const password = prompt('Password:');
-        const name = prompt('Name:');
         try {
             const res = await auth.signInWithEmailAndPassword(email, password);
             if (res.user) {
-                return { ...res.user, displayName: name };
+                return res.user;
             }
         } catch (e) {
             alert('3:' + JSON.stringify(e));

@@ -20,7 +20,7 @@ async function run() {
         return;
     }
     const userId = auth.email;
-    const name = auth.displayName;
+    const name = auth.displayName ?? auth.email;
 
     const user = (await db.collection('users').doc(userId).get())?.data();
     if (user) {
