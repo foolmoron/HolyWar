@@ -2,8 +2,7 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function authed() {
-    	let WRITEABLE = false;
-      return WRITEABLE && request.auth != null &&
+      return request.auth != null &&
         exists(/databases/$(database)/documents/email-allowlist/$(request.auth.token.email));
     }
     function defined(field, obj) {
@@ -14,10 +13,10 @@ service cloud.firestore {
       allow read: if authed();
     }
     match /users/{userId}/{document=**} {
-      allow create, update: if authed() && request.auth.token.email == userId
+      allow create, update: if false && authed() && request.auth.token.email == userId
     }
     match /places/{placeId} {
-      allow update: if authed() && (
+      allow update: if false && authed() && (
       	!defined("owner", get(/databases/$(database)/documents/places/$(placeId)).data) ||
         get(/databases/$(database)/documents/places/$(placeId)).data.owner == request.auth.token.email
       )
