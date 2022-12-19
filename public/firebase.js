@@ -11,6 +11,14 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 async function authUser() {
+    const alerted = localStorage.getItem('alerted');
+    if (!alerted) {
+        alert(
+            "The game is over! Press OK to continue to the page, but you can't interact anymore. Go to holywar.fool.dev/leaderboard to get the full Leaderboard."
+        );
+        localStorage.setItem('alerted', true);
+    }
+
     const googleProvider = new firebase.auth.GoogleAuthProvider();
     try {
         const cachedUser = await new Promise((resolve) => {

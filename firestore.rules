@@ -2,7 +2,8 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function authed() {
-      return request.auth != null &&
+    	let WRITEABLE = false;
+      return WRITEABLE && request.auth != null &&
         exists(/databases/$(database)/documents/email-allowlist/$(request.auth.token.email));
     }
     function defined(field, obj) {
