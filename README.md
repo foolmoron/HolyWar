@@ -1,5 +1,5 @@
 # Holy War
-QR multiplayer game
+AI-based, IRL, async, semi-competitive multiplayer game for a private group
 
 ### Credits
 Momin Khan - Code, Gameplay, Graphic Design (the bad parts)
